@@ -1,0 +1,7 @@
+*.swp
+build
+build.win
+build.lin
+build.linux
+build.wasm
+
