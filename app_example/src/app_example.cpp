@@ -7,7 +7,7 @@ void app_example::_render_ui()
 	if (_show_demo_window)
 		ImGui::ShowDemoWindow(&_show_demo_window);
 
-	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+	// 2. Show a simple window that we create ourselves. We use a Begin/End pair to create a named window.
 	{
 		static float f = 0.0f;
 		static int counter = 0;

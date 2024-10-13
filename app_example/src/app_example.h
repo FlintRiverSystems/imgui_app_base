@@ -2,8 +2,8 @@
 class app_example : public imgui_app_base
 {
 public:
-	app_example() {};
-	virtual ~app_example() {};
+	app_example() = default;
+	~app_example() override = default;
 
 protected:
 	void _render_ui() override;
