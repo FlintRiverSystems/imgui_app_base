@@ -147,7 +147,16 @@ void imgui_app_base::_render_update()
 	ImGui::Render();
 	SDL_SetRenderDrawColor(_renderer, (Uint8)(_bg_color.x * 255), (Uint8)(_bg_color.y * 255), (Uint8)(_bg_color.z * 255), (Uint8)(_bg_color.w * 255));
 	SDL_RenderClear(_renderer);
+
+	_render_before_imgui();
+
+	//SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
+	//SDL_RenderDrawRect(_renderer, new SDL_Rect{ 1,2,30,40 });
+
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+
+	_render_after_imgui();
+
 	SDL_RenderPresent(_renderer);
 }
 

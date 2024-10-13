@@ -19,6 +19,9 @@ protected:
 
 	virtual void _render_update();
 	virtual void _render_ui();
+	virtual void _render_before_imgui() {}
+	virtual void _render_after_imgui() {}
+
 	virtual void _cleanup();
 
 	SDL_Window* _window;
