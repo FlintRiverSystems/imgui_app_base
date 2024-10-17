@@ -153,7 +153,7 @@ void imgui_app_base::_render_update()
 	//SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
 	//SDL_RenderDrawRect(_renderer, new SDL_Rect{ 1,2,30,40 });
 
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), _renderer);
 
 	_render_after_imgui();
 

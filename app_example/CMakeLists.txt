@@ -24,6 +24,15 @@ add_subdirectory(${FRSPROJ}/imgui_app_base imgui_app_base)
 target_include_directories(${PROJECT_NAME} PUBLIC ${FRSPROJ}/imgui_app_base/src)
 target_link_libraries(${PROJECT_NAME} PUBLIC imgui_app_base)
 
+target_include_directories(${PROJECT_NAME} PUBLIC ${FRSPROJ})
+
+add_subdirectory(${FRSPROJ}/frs_utility_cpp frs_utility_cpp)
+target_link_libraries(${PROJECT_NAME} PUBLIC frs_utility_cpp)
+
+find_package (Boost REQUIRED COMPONENTS filesystem date_time log log_setup)
+target_link_libraries(${PROJECT_NAME} PRIVATE Boost::boost Boost::log Boost::log_setup)
+
+
 if (WASM)
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2")
 endif()
