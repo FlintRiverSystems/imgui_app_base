@@ -20,6 +20,9 @@ add_library(${PROJECT_NAME})
 find_package(imgui CONFIG REQUIRED)
 target_link_libraries(${PROJECT_NAME} PUBLIC imgui::imgui)
 
+find_package(implot CONFIG REQUIRED)
+target_link_libraries(${PROJECT_NAME} PUBLIC implot::implot)
+
 if (NOT WASM)
 	#target_include_directories(${PROJECT_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/../..")
 	#target_include_directories(${PROJECT_NAME} PUBLIC "/data/proj")

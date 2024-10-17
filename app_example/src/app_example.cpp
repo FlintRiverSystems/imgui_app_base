@@ -39,4 +39,6 @@ void app_example::_render_ui()
 			_show_another_window = false;
 		ImGui::End();
 	}
+
+	ImPlot::ShowDemoWindow();
 }

@@ -8,9 +8,10 @@
 			"platform": "native"
 		},
 		{
-        	"name": "imgui",
+			"name": "imgui",
 			"default-features": false,
-			"features": [ "sdl2-binding", "sdl2-renderer-binding"]
-		}
+			"features": [ "sdl2-binding", "sdl2-renderer-binding" ]
+		},
+		"implot"
     ]
 }
