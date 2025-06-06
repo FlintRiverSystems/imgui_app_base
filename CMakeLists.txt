@@ -33,14 +33,14 @@ if (NOT WASM)
 	#find_package (Boost REQUIRED COMPONENTS filesystem date_time)
 	#target_link_libraries(${PROJECT_NAME} PRIVATE Boost::boost)
 
-	find_package(SDL2 CONFIG REQUIRED)
-	target_link_libraries(${PROJECT_NAME} PUBLIC SDL2::SDL2 SDL2::SDL2main)
+	find_package(SDL3 CONFIG REQUIRED)
+	target_link_libraries(${PROJECT_NAME} PUBLIC SDL3::SDL3)
 
 	find_package(X11 REQUIRED)
 	target_link_libraries(${PROJECT_NAME} PUBLIC ${X11_LIBRARIES})
 
 else()
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2")
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=3")
 endif()
 
 if (MSVC)

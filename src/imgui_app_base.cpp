@@ -32,7 +32,7 @@ bool imgui_app_base::init (std::string_view title, int width, int height)
 	#endif	
 
 	// Setup SDL
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0)
+	if (!SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS))
 	{
 		printf("SDL_Init Error: %s\n", SDL_GetError());
 		return false;
@@ -44,7 +44,7 @@ bool imgui_app_base::init (std::string_view title, int width, int height)
 	// Setup window
 	Uint32 flags = SDL_WINDOW_OPENGL;
 	flags |= SDL_WINDOW_RESIZABLE;
-	flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+	flags |= SDL_WINDOW_HIGH_PIXEL_DENSITY;
 
 	#ifdef __EMSCRIPTEN__
 	flags |= SDL_WINDOW_MAXIMIZED;
@@ -52,10 +52,10 @@ bool imgui_app_base::init (std::string_view title, int width, int height)
 	#endif	
 
     SDL_WindowFlags window_flags = (SDL_WindowFlags)(flags);
-	_window = SDL_CreateWindow("imgui example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720, window_flags);
+	_window = SDL_CreateWindow("imgui example", 1280, 720, window_flags);
 
 	// Setup SDL_Renderer instance
-	_renderer = SDL_CreateRenderer(_window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
+	_renderer = SDL_CreateRenderer(_window, nullptr);
 	if (_renderer == NULL)
 	{
 		SDL_Log("Error creating SDL_Renderer!");
@@ -64,6 +64,8 @@ bool imgui_app_base::init (std::string_view title, int width, int height)
 	//SDL_RendererInfo info;
 	//SDL_GetRendererInfo(renderer, &info);
 	//SDL_Log("Current SDL_Renderer: %s", info.name);
+
+	SDL_SetRenderVSync(_renderer, SDL_RENDERER_VSYNC_ADAPTIVE);
 
 	// Setup Dear ImGui context
 	IMGUI_CHECKVERSION();
@@ -78,8 +80,8 @@ bool imgui_app_base::init (std::string_view title, int width, int height)
 	//ImGui::StyleColorsClassic();
 
 	// Setup Platform/Renderer backends
-	ImGui_ImplSDL2_InitForSDLRenderer(_window, _renderer);
-	ImGui_ImplSDLRenderer2_Init(_renderer);
+	ImGui_ImplSDL3_InitForSDLRenderer(_window, _renderer);
+	ImGui_ImplSDLRenderer3_Init(_renderer);
 
 	// Load Fonts
 	// - If no fonts are loaded, dear imgui will use the default font. You can also load multiple fonts and use ImGui::PushFont()/PopFont() to select them.
@@ -128,18 +130,18 @@ void imgui_app_base::_render_update()
 	SDL_Event event;
 	while (SDL_PollEvent(&event))
 	{
-		ImGui_ImplSDL2_ProcessEvent(&event);
-		if (event.type == SDL_QUIT)
+		ImGui_ImplSDL3_ProcessEvent(&event);
+		if (event.type == SDL_EVENT_QUIT)
 			_done = true;
 		#ifndef __EMSCRIPTEN__
-		if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_WINDOWEVENT_CLOSE && event.window.windowID == SDL_GetWindowID(_window))
-			_done = true;
+		//if (event.type == SDL_WINDOWEVENT && event.window.event == SDL_EVENT_WINDOW_CLOSE_REQUESTED && event.window.windowID == SDL_GetWindowID(_window))
+		//	_done = true;
 		#endif
 	}
 
 	// Start the Dear ImGui frame
-	ImGui_ImplSDLRenderer2_NewFrame();
-	ImGui_ImplSDL2_NewFrame();
+	ImGui_ImplSDLRenderer3_NewFrame();
+	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 
 	_render_ui();
@@ -154,7 +156,7 @@ void imgui_app_base::_render_update()
 	//SDL_SetRenderDrawColor(_renderer, 255, 255, 255, 255);
 	//SDL_RenderDrawRect(_renderer, new SDL_Rect{ 1,2,30,40 });
 
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), _renderer);
+	ImGui_ImplSDLRenderer3_RenderDrawData(ImGui::GetDrawData(), _renderer);
 
 	_render_after_imgui();
 
@@ -170,8 +172,8 @@ void imgui_app_base::_render_ui()
 
 void imgui_app_base::_cleanup()
 {
-    ImGui_ImplSDLRenderer2_Shutdown();
-    ImGui_ImplSDL2_Shutdown();
+    ImGui_ImplSDLRenderer3_Shutdown();
+    ImGui_ImplSDL3_Shutdown();
 	ImPlot::DestroyContext();
     ImGui::DestroyContext();
 

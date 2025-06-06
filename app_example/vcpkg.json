@@ -1,5 +1,5 @@
 {
-    "name": "imgui-example",
+    "name": "app-example",
     "version": "1.0.0",
     "dependencies": [
 		"boost-format",
@@ -8,13 +8,13 @@
 		"boost-log",
         "nlohmann-json",
 		{
-			"name": "sdl2",
+			"name": "sdl3",
 			"platform": "native"
 		},
 		{
 			"name": "imgui",
 			"default-features": false,
-			"features": [ "sdl2-binding", "sdl2-renderer-binding" ]
+			"features": [ "sdl3-binding", "sdl3-renderer-binding" ]
 		},
 		"implot"
     ]

@@ -32,9 +32,8 @@ target_link_libraries(${PROJECT_NAME} PUBLIC frs_utility_cpp)
 find_package (Boost REQUIRED COMPONENTS filesystem date_time log log_setup)
 target_link_libraries(${PROJECT_NAME} PRIVATE Boost::boost Boost::log Boost::log_setup)
 
-
 if (WASM)
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=2")
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -sUSE_SDL=3")
 endif()
 
 if (MSVC)
