@@ -11,6 +11,7 @@ set(VCPKG_DIR "${FRSTPSRC}/vcpkg")
 message("VCPKG_DIR: ${VCPKG_DIR}")
 
 #set(VCPKG_FEATURE_FLAGS "versions") #enable package versioning in manifest
+set(VCPKG_INSTALL_OPTIONS "--allow-unsupported") # to allow boost-log for emscripten
 set(CMAKE_TOOLCHAIN_FILE ${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake CACHE STRING "vcpkg toolchain file")
 
 project(app_example)
